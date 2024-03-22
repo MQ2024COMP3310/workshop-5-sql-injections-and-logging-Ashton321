@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+import java.util.regex.*;
 
 public class SQLiteConnectionManager {
     //Start code logging exercise
@@ -166,4 +167,31 @@ public class SQLiteConnectionManager {
         }
 
     }
+
+    public boolean isInvalidFormat(String guess) {
+        String REGEX = "[a-zA-Z]";
+        Pattern pattern = Pattern.compile(REGEX);
+        Matcher matcher = pattern.matcher(guess);
+        if(guess.length() != 4 || !matcher.matches()){
+            return false;
+         }
+         return true;
+    }
 }
+    
+        // String sql = "SELECT count(id) as total FROM validWords WHERE word like ?";
+
+        // try (Connection conn = DriverManager.getConnection(databaseURL);
+        //         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        //             stmt.setString(1, guess);
+        //     ResultSet resultRows = stmt.executeQuery();
+        //     if (resultRows.next()) {
+        //         int result = resultRows.getInt("total");
+        //         return (result >= 1);
+        //     }
+
+        //     return false;
+
+        // } catch (SQLException e) {
+        //     System.out.println(e.getMessage());
+        //     return false;

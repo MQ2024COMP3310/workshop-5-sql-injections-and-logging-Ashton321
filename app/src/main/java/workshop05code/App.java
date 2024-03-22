@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
+import java.util.regex.*;;
 
 /**
  *
@@ -73,9 +74,16 @@ public class App {
             System.out.print("Enter a 4 letter word for a guess or q to quit: ");
             String guess = scanner.nextLine();
 
-            while (!guess.equals("q")) {
+            while (!guess.equals("q" )) {
                 System.out.println("You've guessed '" + guess+"'.");
-
+                String REGEX = "[a-z]*$";
+                Pattern pattern = Pattern.compile(REGEX);
+                Matcher matcher = pattern.matcher(guess);
+                if(guess.length() != 4 || !matcher.matches()){
+                    System.out.println("Input not suitable");
+                    System.out.println("Enter a 4 letter word for a guess or q to quit: ");
+                    guess = scanner.nextLine();
+                } else {
                 if (wordleDatabaseConnection.isValidWord(guess)) { 
                     System.out.println("Success! It is in the the list.\n");
                 }else{
@@ -85,6 +93,7 @@ public class App {
                 System.out.print("Enter a 4 letter word for a guess or q to quit: " );
                 guess = scanner.nextLine();
             }
+        }
         } catch (NoSuchElementException | IllegalStateException e) {
             e.printStackTrace();
         }
